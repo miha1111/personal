@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/OSGi%Minimum-1.2"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="D:/Nova mapa/apixu-java-master/servlet-api.jar"/>
 	<classpathentry kind="lib" path="D:/Nova mapa/apixu-java-master/httpcomponents-client-4.5.8/commons-codec-1.11.jar"/>

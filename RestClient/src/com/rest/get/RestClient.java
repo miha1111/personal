@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.ParseException;
@@ -20,10 +21,15 @@ import org.json.JSONObject;
 
 public class RestClient{
 
-    // essential URL structure is built using constants
     public static final String ACCESS_KEY = "5406bbf01b6653cabc007e75b0c8556d";
     public static final String BASE_URL = "http://apilayer.net/api/";
     public static final String ENDPOINT = "live";
+	public static final String BASE_URI = "https://api.ratesapi.io/api/";
+	public static final String toUSD = "?symbols=USD";
+	
+    String requestHttp = BASE_URI + "2010-01-12" + toUSD;
+    HashMap<String, String> allProizvodnjaHash = new HashMap<String, String>(350000);
+
 
     // this object is used for executing requests to the (REST) API
     static CloseableHttpClient httpClient = HttpClients.createDefault();
