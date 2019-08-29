@@ -28,7 +28,6 @@ public class RestClient{
 	public static final String toUSD = "?symbols=USD";
 	
     String requestHttp = BASE_URI + "2010-01-12" + toUSD;
-    HashMap<String, String> allProizvodnjaHash = new HashMap<String, String>(350000);
 
 
     // this object is used for executing requests to the (REST) API
