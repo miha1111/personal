@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class FileOperations {
 
@@ -42,7 +43,7 @@ public class FileOperations {
 
 	// this method write all information from list's of list named "all" into file
 	// "fileName"
-	public void generateFile(String fileName, List<List<String>> all) {
+	public void generateFile(String fileName, List<List<String>> all, String delimit) {
 		System.out.println("Started writing data into " + fileName + ". ");
 		Writer writer = null;
 		try {
@@ -57,19 +58,19 @@ public class FileOperations {
 			for (List<String> fm : all) {
 				for (String fm_att : fm) {
 					writer.append(fm_att);
-					writer.append(DELIMITER);
+					writer.append(delimit);
 				}
 				writer.append(NEW_LINE_SEPARATOR);
 			}
-			System.out.println("Content successfully writen to file " + fileName + "! ");
+			System.out.println("Content successfully writen to file " + fileName + "!\n ");
 
 		} catch (IOException ex) {
-			System.out.println("Error opening/writing to file " + fileName + "!");
+			System.out.println("Error opening/writing to file " + fileName + "!\n");
 		} finally {
 			try {
 				writer.close();
 			} catch (Exception ex) {
-				System.out.println("Error closing file!");
+				System.out.println("Error closing file!\n");
 			}
 		}
 
@@ -82,21 +83,21 @@ public class FileOperations {
 			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName)));
 
 			writer.append(text);
-			System.out.println("Content successfully writen to file " + fileName + "! ");
+			System.out.println("Content successfully writen to file " + fileName + "! \n");
 
 		} catch (IOException ex) {
-			System.out.println("Error opening/writing to file " + fileName + "!");
+			System.out.println("Error opening/writing to file " + fileName + "!\n");
 		} finally {
 			try {
 				writer.close();
 			} catch (Exception ex) {
-				System.out.println("Error closing file!");
+				System.out.println("Error closing file!\n");
 			}
 		}
 
 	}
 
-	public int numOfLines(String fileName, List<List<String>> all) { // returns numbers of lines and save file
+	public int numOfLines(String fileName, List<List<String>> all, String delimiter) { // returns numbers of lines and save file
 																		// "fileName" to cache as variable "all"
 		int num = 0;
 		BufferedReader in = null;
@@ -108,7 +109,7 @@ public class FileOperations {
 		try {
 			in = new BufferedReader(new FileReader(fileName));
 			while ((str = in.readLine()) != null) {
-				String[] lineString = str.split(";");
+				String[] lineString = str.split(Pattern.quote(delimiter));
 				listOfStr = Arrays.asList(lineString);
 				all.add(listOfStr);
 				num++;
@@ -129,7 +130,7 @@ public class FileOperations {
 	}
 
 	public int numOfLinesHash(String fileName, HashMap<String, String> allGospodinjciHash, int hashIDColumn,
-			int hashDataColumn) { // returns numbers of lines and save file "fileName" to HashMap as variable
+			int hashDataColumn, String delimiter) { // returns numbers of lines and save file "fileName" to HashMap as variable
 									// "allGospodinjciHash"
 		int num = 0;
 		BufferedReader in = null;
@@ -141,8 +142,11 @@ public class FileOperations {
 		try {
 			in = new BufferedReader(new FileReader(fileName));
 			while ((str = in.readLine()) != null) {
-				String[] lineString = str.split(";");
+				String[] lineString = str.split(Pattern.quote(delimiter));
+				
+
 				listOfStr = Arrays.asList(lineString);
+
 				allGospodinjciHash.put(listOfStr.get(hashIDColumn), listOfStr.get(hashDataColumn));
 				num++;
 			}

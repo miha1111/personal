@@ -23,10 +23,10 @@ public class mainFind {
 		String inputFile1 = "D:\\Dokumenti\\CIM\\vmesniki_do\\SCADA\\CIS_Integration\\inkrementalne spremembe\\newUP.txt";
 		String inputFile2 = "D:\\Dokumenti\\CIM\\vmesniki_do\\SCADA\\CIS_Integration\\inkrementalne spremembe\\oldUP.txt";
 
-		int UPNewCount = fo.numOfLines(inputFile1, UPNewList);
-		int UPOldCount = fo.numOfLinesHash(inputFile2, UPOldHash, 0, 0);
-		fo.numOfLinesHash(inputFile1, UPNewHash, 0, 0);
-		fo.numOfLines(inputFile2, UPOldList);
+		int UPNewCount = fo.numOfLines(inputFile1, UPNewList, ";");
+		int UPOldCount = fo.numOfLinesHash(inputFile2, UPOldHash, 0, 0, ";");
+		fo.numOfLinesHash(inputFile1, UPNewHash, 0, 0, ",");
+		fo.numOfLines(inputFile2, UPOldList, ";");
 
 		int countDelete = 0;
 		int countAdd = 0;

@@ -53,8 +53,8 @@ public class Stratum2Upgrade {
 			sifrant.put("Vetrna elektrarna", "15");
 //		    System.out.println(sifrant); 
 
-		    lineNumberF1 = Operation.numOfLinesHash(inputFile1, allProizvodnjaHash, 0, 2);
-		    lineNumberF2 = Operation.numOfLines(inputFile2, allMM);
+		    lineNumberF1 = Operation.numOfLinesHash(inputFile1, allProizvodnjaHash, 0, 2, ";");
+		    lineNumberF2 = Operation.numOfLines(inputFile2, allMM, ";");
 
 		    String usagePointID = null;
 			String stratum = null;
@@ -93,7 +93,7 @@ public class Stratum2Upgrade {
 				j++;
 	        }
 
-	        Operation.generateFile(outputFile1, allMM);
+	        Operation.generateFile(outputFile1, allMM, ";");
 			endTime = System.currentTimeMillis();
 			if ((endTime - startTime) > 59999) {
 				spentTimeMinutes = ((endTime - startTime)/1000)/60;
