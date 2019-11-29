@@ -56,9 +56,11 @@ public class FileOperations {
 
 			// Write a list of all familly members to the CSV file
 			for (List<String> fm : all) {
-				for (String fm_att : fm) {
-					writer.append(fm_att);
+				for(int i = 0; i < fm.size(); i++) { 
+					writer.append(fm.get(i));
+					if (i != (fm.size()-1)) {
 					writer.append(delimit);
+					}					
 				}
 				writer.append(NEW_LINE_SEPARATOR);
 			}
