@@ -12,7 +12,7 @@ public class AddLoadGroupToFile {
 		// odpre in prebere CIS file
 		FileOperations Fo = new FileOperations();
 
-		String cisFileName = "D:\\Dokumenti\\CIM\\vmesniki_do\\SCADA\\CIS_Integration\\ELExports\\Usagepoints12092019.csv";
+		String cisFileName = "D:\\Dokumenti\\CIM\\vmesniki_do\\SCADA\\CIS_Integration\\ELExports\\CIS-2019-12-03-2.csv";
 		List<List<String>> CisData = new ArrayList<>();
 		int numOfLinesCIS;
 
@@ -30,12 +30,6 @@ public class AddLoadGroupToFile {
 		int upHashData = 1;
 		int numOfLinesUPStratum;
 
-		// odpre in prebere UsagePoint - EnergyConsumer mapping file
-		String EquipmentUPFileName = "D:\\Dokumenti\\CIM\\vmesniki_do\\SCADA\\LoadProfile\\MappingUPEquipment.csv";
-		HashMap<String, String> EquipmentUPMap = new HashMap<String, String>(400000);
-		int uPEQHashID = 0;
-		int uPEQHashData = 2;
-		int numOfLinesUPEQ;
 
 		HashMap<String, String> MRIDUPMap = new HashMap<String, String>(400000);
 		int uPMRIDHashID = 0;
@@ -46,18 +40,14 @@ public class AddLoadGroupToFile {
 		// StratumLoadGroupMap, lgHashID, lgHashData, "|");
 		numOfLinesUPStratum = Fo.numOfLinesHash(StratumUPFileName, StratumUPMap, upHashID, upHashData, "|");
 		numOfLinesStratumLG = Fo.numOfLinesHash(StratumLodGroupFileName, StratumLoadGroupMap, lgHashID, lgHashData, ";");
-		numOfLinesUPEQ = Fo.numOfLinesHash(EquipmentUPFileName, EquipmentUPMap, uPEQHashID, uPEQHashData, ";");
-		Fo.numOfLinesHash(EquipmentUPFileName, MRIDUPMap, uPMRIDHashID, uPMRIDHashData, ";");
 
 		
 		List<List<String>> CisDataNew = new ArrayList<>();
 
 		
 		for (int i = 0; i < numOfLinesCIS; i++) {
-			if ((i > 0)) { // preskoci prvo vrstico... header
-				String tempUP = CisData.get(i).get(0); // obravnavano merilno mesto
+				String tempUP = CisData.get(i).get(0).substring(1); // obravnavano merilno mesto
 
-				if (MRIDUPMap.containsKey(tempUP)) {
 					CisDataNew.add(CisData.get(i));
 					int cisSizeNew = CisDataNew.size()-1;
 					
@@ -75,43 +65,9 @@ public class AddLoadGroupToFile {
 																						// tempUP
 					CisDataNew.get(cisSizeNew).set(27, tempUPLoadGroup); // zapise LoadGroup-o
 				}
-
-				try {
-					if ((!CisData.get(i).get(28).isEmpty()) | (!(Float.parseFloat(CisData.get(i).get(28)) == 0f))) { // zapise
-																														// p
-																														// in
-																														// q
-						float contractPower = Float.parseFloat(CisData.get(i).get(28));
-						CisDataNew.get(cisSizeNew).set(25, String.valueOf(0.1 * contractPower)); // p
-						CisDataNew.get(cisSizeNew).set(26, String.valueOf(0.1 * contractPower * 0.3287)); // q
-					} else {
-						CisDataNew.get(cisSizeNew).set(25, String.valueOf(5));
-						CisDataNew.get(cisSizeNew).set(26, String.valueOf(5 * 0.3287));
-					}
-
-					
-					if (EquipmentUPMap.get(CisData.get(i).get(0)).equals("NULL")) {
-						CisDataNew.get(cisSizeNew).set(16, (""));
-					}
-					else {
-						CisDataNew.get(cisSizeNew).set(16, ("_" + EquipmentUPMap.get(CisData.get(i).get(0))));
-					}
-					
-					
-						CisDataNew.get(cisSizeNew).set(0, ("_" + MRIDUPMap.get(CisData.get(i).get(0))));
-					
-					CisDataNew.get(cisSizeNew).set(30, ("_" + CisData.get(i).get(30)));
-
-
-				} catch (NumberFormatException ex) { // handle your exception
-					CisDataNew.remove(cisSizeNew);
-				} catch (NullPointerException np) {
-					CisData.remove(cisSizeNew);
-				}
-				}
 				
 			}
-		}
+
 
 		String OutputFile = "D:\\Dokumenti\\CIM\\vmesniki_do\\SCADA\\CIS_Integration\\ELExports\\CorrectedCISExport.csv";
 
